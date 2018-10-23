@@ -74,9 +74,9 @@ int main(int argc, char *argv[])
     // determine padding for scanlines
     int inPadding = (4 - (inBi.biWidth * sizeof(RGBTRIPLE)) % 4) % 4;
 
-    fprintf(stderr, "bi.biWidth *= f => %i * %f = %f\n", bi.biWidth, f, bi.biWidth * f);
+    // fprintf(stderr, "bi.biWidth *= f => %i * %f = %f\n", bi.biWidth, f, bi.biWidth * f);
 
-    fprintf(stderr, "bi.biHeight *= f => %i * %f = %f\n", bi.biHeight, f, bi.biHeight * f);
+    // fprintf(stderr, "bi.biHeight *= f => %i * %f = %f\n", bi.biHeight, f, bi.biHeight * f);
 
     // modify BITMAPINFOHEADER
     bi.biWidth *= f;
@@ -179,7 +179,7 @@ int main(int argc, char *argv[])
         int width = (sizeof(triples[0]) / sizeof(RGBTRIPLE)) * f;
         int height = sizeof(triples) / sizeof(triples[0]) *f;
 
-        fprintf(stderr, "width = %i;\nheight = %i;\n", width, height);
+        // fprintf(stderr, "width = %i;\nheight = %i;\n", width, height);
 
         for(int i = 0; i < height; i++)
         {
@@ -191,7 +191,7 @@ int main(int argc, char *argv[])
 
                 RGBTRIPLE triple = triples[y][x];
 
-                fprintf(stderr, "triples[%i][%i] = %x%x%x\t\t", y, x, triple.rgbtRed, triple.rgbtGreen, triple.rgbtBlue);
+                // fprintf(stderr, "triples[%i][%i] = %x%x%x\t\t", y, x, triple.rgbtRed, triple.rgbtGreen, triple.rgbtBlue);
 
                 // write RGB triple to outfile
                 fwrite(&triple, sizeof(RGBTRIPLE), 1, outptr);
@@ -203,7 +203,7 @@ int main(int argc, char *argv[])
             {
                 fputc(0x00, outptr);
             }
-            fprintf(stderr, "\n");
+            // fprintf(stderr, "\n");
 
         }
 
