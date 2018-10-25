@@ -44,10 +44,10 @@ int main(int argc, char *argv[])
     int read = fread(&block, 1, sizeof(BLOCK), inptr);
 
     // create file name
-    FILE *outptr = (FILE *) malloc(sizeof(FILE));
-    char filename[7];
+    FILE *outptr = NULL;
+    char filename[8];
 
-    while(read == 512)
+    while (read == 512)
     {
 
         if ((block[0] == 0xff) && (block[1] == 0xd8) && (block[2] == 0xff) && (((block[3] & 0xf0) == 0xe0) || ((block[3] & 0xff) == 0xe0)))
@@ -72,7 +72,7 @@ int main(int argc, char *argv[])
 
             // create new file for jpg
             FILE *file = fopen(filename, "w");
-            if (outptr == NULL)
+            if (file == NULL)
             {
                 fclose(inptr);
                 fprintf(stderr, "Could not create %s.\n", filename);
@@ -81,33 +81,43 @@ int main(int argc, char *argv[])
 
             outptr = file;
 
-            for (int i = 0; i < sizeof(BLOCK); i++)
+            if (read == 512)
             {
+                for (int i = 0; i < sizeof(BLOCK); i++)
+                {
 
-                fwrite(&block[i], sizeof(BYTE), 1, outptr);
+                    fwrite(&block[i], sizeof(BYTE), 1, outptr);
 
-                fprintf(stderr, "%x ", block[i]);
+                    // fprintf(stderr, "%x ", block[i]);
 
+                }
             }
 
         }
         else if (jpgFound)
         {
-            for (int i = 0; i < sizeof(BLOCK); i++)
+            if (read == 512)
             {
+                for (int i = 0; i < sizeof(BLOCK); i++)
+                {
 
-                fwrite(&block[i], sizeof(BYTE), 1, outptr);
+                    fwrite(&block[i], sizeof(BYTE), 1, outptr);
 
-                fprintf(stderr, "%x ", block[i]);
+                    // fprintf(stderr, "%x ", block[i]);
 
+                }
             }
-
-            fprintf(stderr, "\n");
-
 
         }
 
-        read = fread(&block, 1, sizeof(BLOCK), inptr);
+        if (feof(inptr))
+        {
+            break;
+        }
+        else
+        {
+            read = fread(&block, 1, sizeof(BLOCK), inptr);
+        }
 
     }
 
@@ -123,7 +133,7 @@ int main(int argc, char *argv[])
 
     // close infile
     fclose(inptr);
-    free(outptr);
+    // free(outptr);
 
     // success
     return 0;

@@ -137,7 +137,8 @@ int main(int argc, char *argv[])
         // iterate over infile's scanlines
         for (int i = 0, biHeight = abs(inBi.biHeight); i < biHeight; i++)
         {
-            for (int l = 0; l < f; l++) {
+            for (int l = 0; l < f; l++)
+            {
 
                 // iterate over pixels in scanline
                 for (int j = 0; j < inBi.biWidth; j++)
@@ -177,17 +178,17 @@ int main(int argc, char *argv[])
         // fprintf(stderr, "sizeof(triples[i]) = %lu = %f byte\n", sizeof(triples[0]), (sizeof(triples[0]) / sizeof(RGBTRIPLE)) * f);
 
         int width = (sizeof(triples[0]) / sizeof(RGBTRIPLE)) * f;
-        int height = sizeof(triples) / sizeof(triples[0]) *f;
+        int height = sizeof(triples) / sizeof(triples[0]) * f;
 
         // fprintf(stderr, "width = %i;\nheight = %i;\n", width, height);
 
-        for(int i = 0; i < height; i++)
+        for (int i = 0; i < height; i++)
         {
 
             for (int j = 0; j < width; j++)
             {
-                int x = (int) (j * (1 / f));
-                int y = (int) (i * (1 / f));
+                int x = (int)(j * (1 / f));
+                int y = (int)(i * (1 / f));
 
                 RGBTRIPLE triple = triples[y][x];
 
